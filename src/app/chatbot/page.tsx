@@ -560,15 +560,15 @@ const page = () => {
             <button
               onClick={handleSendMessage}
               disabled={!inputValue.trim()}
-              className="absolute right-2 top-7.5 -translate-y-1/2 w-[100px] h-[42px] border-none rounded-xl bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] cursor-pointer flex items-center justify-center shadow-[0_3px_10px_rgba(127,176,105,0.3)] transition-all duration-200 z-[2] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-95 enabled:hover:scale-105 enabled:hover:shadow-[0_5px_15px_rgba(127,176,105,0.4)] enabled:active:scale-95"
+              className="absolute right-2 top-7 -translate-y-1/2 w-[100px] h-[42px] border-none rounded-xl bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] cursor-pointer flex items-center justify-center shadow-[0_3px_10px_rgba(127,176,105,0.3)] transition-all duration-200 z-[2] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-95 enabled:hover:scale-105 enabled:hover:shadow-[0_5px_15px_rgba(127,176,105,0.4)] enabled:active:scale-95"
             >
               <Image src={send} alt="Send" />
             </button>
           </div>
 
           {!isChatStarted && (
-            <div className="flex flex-nowrap gap-3 justify-center max-w-[900px] w-full">
-              <div className="flex-1 min-w-[140px] max-w-[180px]">
+            <div className="flex flex-nowrap gap-11 justify-center max-w-[900px] w-full">
+              <div className="flex-1 w-[10px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
@@ -577,10 +577,10 @@ const page = () => {
                   }
                   className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
-                  🌆 Create Proposals
+                  🌆 Glossary
                 </button>
               </div>
-              <div className="flex-1 min-w-[140px] max-w-[180px]">
+              <div className="flex-1">
                 <button
                   onClick={() =>
                     handleQuickAction(
@@ -589,10 +589,10 @@ const page = () => {
                   }
                   className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
-                  🍾 Flow Diagram
+                  🍾 Prompt
                 </button>
               </div>
-              <div className="flex-1 min-w-[140px] max-w-[180px]">
+              <div className="flex-1">
                 <button
                   onClick={() =>
                     handleQuickAction(
@@ -601,10 +601,10 @@ const page = () => {
                   }
                   className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
-                  🎓 Get Advice
+                  🎓 Price Calculator
                 </button>
               </div>
-              <div className="flex-1 min-w-[140px] max-w-[180px]">
+              <div className="flex-1 ">
                 <button
                   onClick={() =>
                     handleQuickAction(
@@ -613,10 +613,10 @@ const page = () => {
                   }
                   className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
-                  🧠 Brainstorm
+                  🧠 Services
                 </button>
               </div>
-              <div className="flex-1 min-w-[140px] max-w-[180px]">
+              {/* <div className="flex-1 min-w-[140px] max-w-[180px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
@@ -627,7 +627,7 @@ const page = () => {
                 >
                   📸 Architecture
                 </button>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
