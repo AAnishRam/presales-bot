@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import "@/app/chatbot/page.css";
+import "@/app/globals.css";
 import Image from "next/image";
 import top_right from "@/app/_assests/top-right-shade.png";
 import bottom_left from "@/app/_assests/bottom-left-shade.png";
@@ -282,18 +282,30 @@ const page = () => {
   }
 
   return (
-    <div className="main-content">
-      {/* Bg and Hamburger Section */}
-      <div className="top-right-image">
-        <Image src={top_right} alt="top_right"></Image>
+    <div className="relative bg-gradient-to-l from-[#fff9f5] to-white h-screen w-screen">
+      {/* Background Images */}
+      <div className="fixed top-0 right-0 w-[749.27px] h-[592.41px] z-[1] pointer-events-none">
+        <Image
+          src={top_right}
+          alt="top_right"
+          className="w-full h-full object-cover"
+        />
       </div>
-      <div className="bottom-left-image">
-        <Image src={bottom_left} alt="bottom_left"></Image>
+      <div className="fixed bottom-0 left-0 w-[749.27px] h-[592.41px] z-[1] pointer-events-none">
+        <Image
+          src={bottom_left}
+          alt="bottom_left"
+          className="w-full h-full object-cover"
+        />
       </div>
+
       {/* Back Button (only in chat mode) */}
       {isChatStarted && (
-        <div className="back-button-container">
-          <button className="back-button" onClick={handleBackToWelcome}>
+        <div className="fixed top-6 left-6 z-[100]">
+          <button
+            className="w-11 h-11 border-none rounded-full bg-white/90 backdrop-blur-[10px] flex items-center justify-center cursor-pointer transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-[#374151] hover:bg-white hover:scale-105 hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)]"
+            onClick={handleBackToWelcome}
+          >
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
               <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
             </svg>
@@ -302,57 +314,88 @@ const page = () => {
       )}
 
       {/* Hamburger (only in welcome mode) */}
-      {!isChatStarted && (
-        <div className="hamburger-container">
-          <Image src={hamburger} alt="hamburger"></Image>
+      {/* {!isChatStarted && (
+        <div className="absolute left-6 top-6 cursor-pointer h-max w-11">
+          <Image src={hamburger} alt="hamburger" />
         </div>
-      )}
+      )} */}
 
       {/* Chat Interface */}
-      <div className={`centre-section ${isChatStarted ? "chat-mode" : ""}`}>
+      <div
+        className={`flex flex-col items-center ${
+          isChatStarted ? "justify-start pt-4 px-8" : "justify-between"
+        } h-screen p-8 z-10 relative transition-all duration-500`}
+      >
         {/* Header - Logo and Title */}
         <div
-          className={`centre-section-header ${
-            isChatStarted ? "chat-header" : ""
-          }`}
+          className={`flex flex-col items-center ${
+            isChatStarted ? "flex-none py-4 mb-4" : "flex-1 justify-center"
+          } max-w-[600px] w-full transition-all duration-500`}
         >
-          <div className="centre-section-logo">
-            <Image src={logo} alt="centre-section-logo"></Image>
+          <div
+            className={`${
+              isChatStarted ? "w-15 h-15 mb-2" : "w-32 h-32 mb-5"
+            } flex items-center justify-center transition-all duration-500`}
+          >
+            <Image src={logo} alt="centre-section-logo" />
           </div>
           {!isChatStarted && (
             <>
-              <div className="centre-section-text1">
-                <p>
-                  Hey User! <br></br>Can I help you with anything?
+              <div className="text-center text-[#130261] text-4xl font-semibold mb-2 max-w-[600px] w-full p-0">
+                <p className="m-0 leading-tight">
+                  Hey User! <br />
+                  Can I help you with anything?
                 </p>
               </div>
-              <div className="centre-section-text2">
-                <p>Ready to assist you with anything you need.</p>
+              <div className="text-center mb-8 max-w-[600px] w-full p-0">
+                <p className="text-base text-[#888888] m-0 font-normal">
+                  Ready to assist you with anything you need.
+                </p>
               </div>
             </>
           )}
           {isChatStarted && (
-            <div className="chat-title">
-              <p>Ask our AI anything</p>
+            <div className="text-center text-[#130261] text-2xl font-semibold m-0">
+              <p className="m-0">Ask our AI anything</p>
             </div>
           )}
         </div>
 
         {/* Chat Messages Area */}
         {isChatStarted && (
-          <div className="chat-messages-container" ref={messagesContainerRef}>
-            <div className="chat-messages">
+          <div
+            className="flex-1 w-full max-w-[900px] overflow-y-auto mb-4 relative scroll-smooth scrollbar-none"
+            ref={messagesContainerRef}
+          >
+            <div className="flex flex-col gap-6 py-4">
               {messages.map((message) => (
-                <div key={message.id} className={`message ${message.sender}`}>
-                  <div className="message-content">
+                <div
+                  key={message.id}
+                  className={`w-full animate-[slideIn_0.3s_ease] ${
+                    message.sender === "user"
+                      ? "flex justify-end"
+                      : "flex justify-start"
+                  }`}
+                >
+                  <div
+                    className={`max-w-[75%] px-7 py-5 rounded-[20px] relative text-[15px] leading-relaxed ${
+                      message.sender === "user"
+                        ? "bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] text-white rounded-br-[6px]"
+                        : "bg-gradient-to-br from-[#f8f9fa] to-white text-[#333] border border-[#e5e5e5] rounded-bl-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.05)]"
+                    }`}
+                  >
                     {message.sender === "user" && (
-                      <span className="message-label">ME</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider mb-2 block opacity-80 text-white/90">
+                        ME
+                      </span>
                     )}
                     {message.sender === "ai" && (
-                      <span className="message-label">OUR AI</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider mb-2 block opacity-80 text-[#666]">
+                        OUR AI
+                      </span>
                     )}
                     <div
-                      className="message-text"
+                      className="leading-relaxed font-inherit m-0 p-0 text-inherit block w-full break-words"
                       dangerouslySetInnerHTML={{
                         __html: formatMessageText(message.text),
                       }}
@@ -362,18 +405,20 @@ const page = () => {
                     {message.sender === "ai" && (
                       <>
                         {message.has_both_diagrams && (
-                          <div className="visualizations-container">
-                            <h4 className="viz-title">
+                          <div className="mt-6 p-5 bg-gradient-to-br from-[#f8f9fa] to-white rounded-2xl border border-[#e5e7eb] shadow-[0_4px_12px_rgba(0,0,0,0.05)] animate-[fadeInUp_0.5s_ease-out]">
+                            <h4 className="text-[#374151] text-base font-semibold mb-4 flex items-center gap-2">
                               📊 Visual Documentation
                             </h4>
-                            <div className="dual-diagrams">
-                              <div className="diagram-item">
-                                <h5>🏗️ AWS Architecture Diagram</h5>
+                            <div className="grid grid-cols-2 gap-5 mobile-single-col">
+                              <div className="bg-white rounded-xl p-4 border border-[#e5e7eb] shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                                <h5 className="text-[#374151] text-sm font-semibold mb-3 flex items-center gap-1.5">
+                                  🏗️ AWS Architecture Diagram
+                                </h5>
                                 {message.architecture_url && (
                                   <img
                                     src={`http://13.220.115.202:8000${message.architecture_url}`}
                                     alt="Architecture Diagram"
-                                    className="diagram-image"
+                                    className="w-full h-auto rounded-lg border border-[#e5e7eb] shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] hover:border-[#9ecbfb]"
                                     onClick={() =>
                                       handleImageClick(
                                         `http://13.220.115.202:8000${message.architecture_url}`,
@@ -383,13 +428,15 @@ const page = () => {
                                   />
                                 )}
                               </div>
-                              <div className="diagram-item">
-                                <h5>📊 Process Flowchart</h5>
+                              <div className="bg-white rounded-xl p-4 border border-[#e5e7eb] shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+                                <h5 className="text-[#374151] text-sm font-semibold mb-3 flex items-center gap-1.5">
+                                  📊 Process Flowchart
+                                </h5>
                                 {message.flowchart_url && (
                                   <img
                                     src={`http://13.220.115.202:8000${message.flowchart_url}`}
                                     alt="Process Flowchart"
-                                    className="diagram-image"
+                                    className="w-full h-auto rounded-lg border border-[#e5e7eb] shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] hover:border-[#9ecbfb]"
                                     onClick={() =>
                                       handleImageClick(
                                         `http://13.220.115.202:8000${message.flowchart_url}`,
@@ -405,15 +452,15 @@ const page = () => {
 
                         {!message.has_both_diagrams &&
                           message.has_architecture && (
-                            <div className="visualizations-container">
-                              <h4 className="viz-title">
+                            <div className="mt-6 p-5 bg-gradient-to-br from-[#f8f9fa] to-white rounded-2xl border border-[#e5e7eb] shadow-[0_4px_12px_rgba(0,0,0,0.05)] animate-[fadeInUp_0.5s_ease-out]">
+                              <h4 className="text-[#374151] text-base font-semibold mb-4 flex items-center gap-2">
                                 🏗️ AWS Architecture Diagram
                               </h4>
                               {message.architecture_url && (
                                 <img
                                   src={`http://13.220.115.202:8000${message.architecture_url}`}
                                   alt="Architecture Diagram"
-                                  className="diagram-image"
+                                  className="w-full h-auto rounded-lg border border-[#e5e7eb] shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] hover:border-[#9ecbfb]"
                                   onClick={() =>
                                     handleImageClick(
                                       `http://13.220.115.202:8000${message.architecture_url}`,
@@ -427,15 +474,15 @@ const page = () => {
 
                         {!message.has_both_diagrams &&
                           message.has_flowchart && (
-                            <div className="visualizations-container">
-                              <h4 className="viz-title">
+                            <div className="mt-6 p-5 bg-gradient-to-br from-[#f8f9fa] to-white rounded-2xl border border-[#e5e7eb] shadow-[0_4px_12px_rgba(0,0,0,0.05)] animate-[fadeInUp_0.5s_ease-out]">
+                              <h4 className="text-[#374151] text-base font-semibold mb-4 flex items-center gap-2">
                                 📊 Process Flowchart
                               </h4>
                               {message.flowchart_url && (
                                 <img
                                   src={`http://13.220.115.202:8000${message.flowchart_url}`}
                                   alt="Process Flowchart"
-                                  className="diagram-image"
+                                  className="w-full h-auto rounded-lg border border-[#e5e7eb] shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] hover:border-[#9ecbfb]"
                                   onClick={() =>
                                     handleImageClick(
                                       `http://13.220.115.202:8000${message.flowchart_url}`,
@@ -451,12 +498,14 @@ const page = () => {
                           !message.has_architecture &&
                           !message.has_flowchart &&
                           message.visualization_url && (
-                            <div className="visualizations-container">
-                              <h4 className="viz-title">📊 Visualization</h4>
+                            <div className="mt-6 p-5 bg-gradient-to-br from-[#f8f9fa] to-white rounded-2xl border border-[#e5e7eb] shadow-[0_4px_12px_rgba(0,0,0,0.05)] animate-[fadeInUp_0.5s_ease-out]">
+                              <h4 className="text-[#374151] text-base font-semibold mb-4 flex items-center gap-2">
+                                📊 Visualization
+                              </h4>
                               <img
                                 src={`http://13.220.115.202:8000${message.visualization_url}`}
                                 alt="Visualization"
-                                className="diagram-image"
+                                className="w-full h-auto rounded-lg border border-[#e5e7eb] shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] hover:border-[#9ecbfb]"
                                 onClick={() =>
                                   handleImageClick(
                                     `http://13.220.115.202:8000${message.visualization_url}`,
@@ -476,13 +525,15 @@ const page = () => {
 
             {/* Scroll to Bottom Button */}
             <button
-              className={`scroll-to-bottom ${
-                showScrollToBottom ? "visible" : ""
-              }`}
+              className={`absolute bottom-5 right-5 w-10 h-10 bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] border-none rounded-full cursor-pointer flex items-center justify-center shadow-[0_4px_12px_rgba(127,176,105,0.3)] transition-all duration-300 z-10 ${
+                showScrollToBottom
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-2.5"
+              } hover:scale-110 hover:shadow-[0_6px_16px_rgba(127,176,105,0.4)]`}
               onClick={scrollToBottom}
               aria-label="Scroll to bottom"
             >
-              <svg viewBox="0 0 24 24">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
                 <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
               </svg>
             </button>
@@ -490,8 +541,8 @@ const page = () => {
         )}
 
         {/* Input Area */}
-        <div className="centre-section-chat-area">
-          <div className="centre-section-chat-area-textbox">
+        <div className="w-full max-w-[900px] mb-8">
+          <div className="mb-6 relative bg-gradient-to-br from-[#e1d9d9] to-[#9ecbfb] p-[3px] rounded-[15px] w-full max-w-[900px]">
             <textarea
               ref={textareaRef}
               placeholder={
@@ -503,66 +554,76 @@ const page = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               rows={1}
+              className="w-full min-h-[50px] max-h-[120px] py-[15px] px-6 pr-[115px] border-none rounded-xl text-base outline-none bg-white text-[#333] font-inherit leading-normal resize-none overflow-y-auto placeholder:text-[#888] placeholder:font-normal scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[rgba(158,203,251,0.3)] hover:scrollbar-thumb-[rgba(158,203,251,0.5)]"
               style={{ resize: "none" }}
             />
-            <button onClick={handleSendMessage} disabled={!inputValue.trim()}>
-              <Image src={send} alt="Send"></Image>
+            <button
+              onClick={handleSendMessage}
+              disabled={!inputValue.trim()}
+              className="absolute right-2 top-7.5 -translate-y-1/2 w-[100px] h-[42px] border-none rounded-xl bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] cursor-pointer flex items-center justify-center shadow-[0_3px_10px_rgba(127,176,105,0.3)] transition-all duration-200 z-[2] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-95 enabled:hover:scale-105 enabled:hover:shadow-[0_5px_15px_rgba(127,176,105,0.4)] enabled:active:scale-95"
+            >
+              <Image src={send} alt="Send" />
             </button>
           </div>
 
           {!isChatStarted && (
-            <div className="centre-section-chat-area-buttons">
-              <div className="centre-section-chat-area-buttons-1">
+            <div className="flex flex-nowrap gap-3 justify-center max-w-[900px] w-full">
+              <div className="flex-1 min-w-[140px] max-w-[180px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
                       "I need help creating a comprehensive proposal for an AI/ML solution for my customer"
                     )
                   }
+                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
                   🌆 Create Proposals
                 </button>
               </div>
-              <div className="centre-section-chat-area-buttons-2">
+              <div className="flex-1 min-w-[140px] max-w-[180px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
                       "Can you help me create a process flow diagram for an AI/ML project workflow?"
                     )
                   }
+                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
                   🍾 Flow Diagram
                 </button>
               </div>
-              <div className="centre-section-chat-area-buttons-3">
+              <div className="flex-1 min-w-[140px] max-w-[180px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
                       "I need expert advice on AI/ML solution architecture and feasibility"
                     )
                   }
+                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
                   🎓 Get Advice
                 </button>
               </div>
-              <div className="centre-section-chat-area-buttons-4">
+              <div className="flex-1 min-w-[140px] max-w-[180px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
                       "Help me brainstorm AI/ML solutions for my customer's business requirements"
                     )
                   }
+                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
                   🧠 Brainstorm
                 </button>
               </div>
-              <div className="centre-section-chat-area-buttons-5">
+              <div className="flex-1 min-w-[140px] max-w-[180px]">
                 <button
                   onClick={() =>
                     handleQuickAction(
                       "Generate an AWS architecture diagram for an AI/ML solution"
                     )
                   }
+                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
                 >
                   📸 Architecture
                 </button>
@@ -575,18 +636,20 @@ const page = () => {
       {/* Image Modal */}
       {showImageModal && selectedImage && (
         <div
-          className="image-modal-overlay"
+          className="fixed inset-0 bg-black/80 backdrop-blur-[5px] flex items-center justify-center z-[1000] animate-[fadeIn_0.3s_ease]"
           onClick={() => setShowImageModal(false)}
         >
           <div
-            className="image-modal-content"
+            className="bg-white rounded-2xl max-w-[90vw] max-h-[90vh] flex flex-col overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] animate-[scaleIn_0.3s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="image-modal-header">
-              <h3>{selectedImage.title}</h3>
-              <div className="image-modal-controls">
+            <div className="py-5 px-6 pb-4 border-b border-[#e5e7eb] flex justify-between items-center bg-[#f8f9fa]">
+              <h3 className="m-0 text-lg font-semibold text-[#374151]">
+                {selectedImage.title}
+              </h3>
+              <div className="flex gap-2">
                 <button
-                  className="modal-control-btn"
+                  className="w-10 h-10 border-none rounded-lg bg-[#f3f4f6] text-[#374151] cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-[#e5e7eb] hover:scale-105"
                   onClick={handleDownloadImage}
                   title="Download"
                 >
@@ -600,7 +663,7 @@ const page = () => {
                   </svg>
                 </button>
                 <button
-                  className="modal-control-btn"
+                  className="w-10 h-10 border-none rounded-lg bg-[#f3f4f6] text-[#374151] cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-[#e5e7eb] hover:scale-105"
                   onClick={handleFullScreen}
                   title="Open in new tab"
                 >
@@ -614,7 +677,7 @@ const page = () => {
                   </svg>
                 </button>
                 <button
-                  className="modal-control-btn close-btn"
+                  className="w-10 h-10 border-none rounded-lg bg-[#fee2e2] text-[#dc2626] cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-[#fecaca] hover:scale-105"
                   onClick={() => setShowImageModal(false)}
                   title="Close"
                 >
@@ -629,11 +692,11 @@ const page = () => {
                 </button>
               </div>
             </div>
-            <div className="image-modal-body">
+            <div className="p-6 flex items-center justify-center min-h-[400px] max-h-[70vh] overflow-auto">
               <img
                 src={selectedImage.url}
                 alt={selectedImage.title}
-                className="modal-image"
+                className="max-w-full max-h-full object-contain rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
               />
             </div>
           </div>
