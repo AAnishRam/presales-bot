@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import "@/app/globals.css";
+import QuickActionButton from "@/app/components/QuickActionButton";
 import Image from "next/image";
 import top_right from "@/app/_assests/top-right-shade.png";
 import bottom_left from "@/app/_assests/bottom-left-shade.png";
@@ -605,65 +606,26 @@ const page = () => {
           {!isChatStarted && (
             <div className="flex flex-nowrap gap-11 justify-center max-w-[900px] w-full">
               <div className="flex-1 w-[10px]">
-                <button
-                  onClick={() =>
-                    handleQuickAction(
-                      "I need help creating a comprehensive proposal for an AI/ML solution for my customer"
-                    )
-                  }
-                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
-                >
-                  🌆 Glossary
-                </button>
+                <QuickActionButton
+                  url="https://www.goml.io/ai-glossary"
+                  label="🌆 Glossary"
+                />
               </div>
               <div className="flex-1">
-                <button
-                  onClick={() =>
-                    handleQuickAction(
-                      "Can you help me create a process flow diagram for an AI/ML project workflow?"
-                    )
-                  }
-                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
-                >
-                  🍾 Prompt
-                </button>
+                <QuickActionButton url="" label="🍾 Prompt" />
               </div>
               <div className="flex-1">
-                <button
-                  onClick={() =>
-                    handleQuickAction(
-                      "I need expert advice on AI/ML solution architecture and feasibility"
-                    )
-                  }
-                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
-                >
-                  🎓 Price Calculator
-                </button>
+                <QuickActionButton
+                  url="https://calculator.aws/#/"
+                  label="🎓 Price Calculator"
+                />
               </div>
               <div className="flex-1 ">
-                <button
-                  onClick={() =>
-                    handleQuickAction(
-                      "Help me brainstorm AI/ML solutions for my customer's business requirements"
-                    )
-                  }
-                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
-                >
-                  🧠 Services
-                </button>
+                <QuickActionButton
+                  url="https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/"
+                  label="🧠 Services"
+                />
               </div>
-              {/* <div className="flex-1 min-w-[140px] max-w-[180px]">
-                <button
-                  onClick={() =>
-                    handleQuickAction(
-                      "Generate an AWS architecture diagram for an AI/ML solution"
-                    )
-                  }
-                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
-                >
-                  📸 Architecture
-                </button>
-              </div> */}
             </div>
           )}
         </div>
