@@ -12,6 +12,7 @@ import send from "@/app/_assests/Send-button.png";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
+import { chatWithBot } from "../services/chatServices";
 
 interface Message {
   id: number;
@@ -41,6 +42,7 @@ const page = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  //this is frontend route
   const handleSendMessage = async () => {
     if (inputValue.trim() === "") return;
 
@@ -70,6 +72,8 @@ const page = () => {
         role: msg.sender === "user" ? "user" : "assistant",
         content: msg.text,
       }));
+
+      // const response = await chatWithBot({ history, currentInput });
 
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -123,6 +127,83 @@ const page = () => {
       });
     }
   };
+
+  //using axios
+  // const handleSendMessage = async () => {
+  //   if (inputValue.trim() === "") return;
+
+  //   const userMessage: Message = {
+  //     id: Date.now(),
+  //     text: inputValue,
+  //     sender: "user",
+  //     timestamp: new Date(),
+  //   };
+
+  //   setMessages((prev) => [...prev, userMessage]);
+
+  //   const currentInput = inputValue;
+  //   setInputValue("");
+  //   setIsChatStarted(true);
+
+  //   const loadingMessage: Message = {
+  //     id: Date.now() + 1,
+  //     text: "Analyzing requirement and generating solution architecture...",
+  //     sender: "ai",
+  //     timestamp: new Date(),
+  //     isLoading: true,
+  //   };
+  //   setMessages((prev) => [...prev, loadingMessage]);
+
+  //   try {
+  //     const history = messages.map((msg) => ({
+  //       role: msg.sender === "user" ? "user" : "assistant",
+  //       content: msg.text,
+  //     }));
+
+  //     // 🚀 Correct call to service function:
+  //     const data = await chatWithBot({ history, currentInput });
+
+  //     console.log("Bot API response data:", data);
+
+  //     setMessages((prev) => {
+  //       const filtered = prev.filter((msg) => !msg.isLoading);
+
+  //       const aiResponse: Message = {
+  //         id: Date.now() + 2,
+  //         text:
+  //           data.answer ||
+  //           "I apologize, but I didn't receive a proper response.",
+  //         sender: "ai",
+  //         timestamp: new Date(),
+  //         visualization_url: data.visualization_url,
+  //         architecture_url: data.architecture_url,
+  //         flowchart_url: data.flowchart_url,
+  //         has_architecture: data.has_architecture,
+  //         has_flowchart: data.has_flowchart,
+  //         has_both_diagrams: data.has_both_diagrams,
+  //       };
+
+  //       return [...filtered, aiResponse];
+  //     });
+  //   } catch (error: any) {
+  //     console.error("Error calling chatWithBot:", error);
+
+  //     setMessages((prev) => {
+  //       const filtered = prev.filter((msg) => !msg.isLoading);
+
+  //       const errorResponse: Message = {
+  //         id: Date.now() + 2,
+  //         text: `I'm sorry, I encountered an error while processing your request. Please try again. Error: ${
+  //           error.message || error
+  //         }`,
+  //         sender: "ai",
+  //         timestamp: new Date(),
+  //       };
+
+  //       return [...filtered, errorResponse];
+  //     });
+  //   }
+  // };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
