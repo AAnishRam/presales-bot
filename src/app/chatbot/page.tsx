@@ -84,6 +84,7 @@ const page = () => {
       }
 
       const data = await response.json();
+      console.log(data);
 
       setMessages((prev) => {
         const filtered = prev.filter((msg) => !msg.isLoading);
@@ -332,13 +333,15 @@ const page = () => {
             isChatStarted ? "flex-none py-4 mb-4" : "flex-1 justify-center"
           } max-w-[600px] w-full transition-all duration-500`}
         >
-          <div
-            className={`${
-              isChatStarted ? "w-15 h-15 mb-2" : "w-32 h-32 mb-5"
-            } flex items-center justify-center transition-all duration-500`}
-          >
-            <Image src={logo} alt="centre-section-logo" />
-          </div>
+          {!isChatStarted && (
+            <div
+              className={`${
+                isChatStarted ? "w-15 h-15 mb-2" : "w-32 h-32 mb-5"
+              } flex items-center justify-center transition-all duration-500`}
+            >
+              <Image src={logo} alt="centre-section-logo" />
+            </div>
+          )}
           {!isChatStarted && (
             <>
               <div className="text-center text-[#130261] text-4xl font-semibold mb-2 max-w-[600px] w-full p-0">
@@ -354,11 +357,11 @@ const page = () => {
               </div>
             </>
           )}
-          {isChatStarted && (
+          {/* {isChatStarted && (
             <div className="text-center text-[#130261] text-2xl font-semibold m-0">
               <p className="m-0">Ask our AI anything</p>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Chat Messages Area */}

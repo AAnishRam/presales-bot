@@ -16,6 +16,8 @@ export async function POST(request: NextRequest) {
       }
     );
 
+    console.log(response);
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -23,6 +25,9 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     console.log(data);
+
+    console.log("This is from api/chat");
+    console.log(NextResponse.json(data));
 
     return NextResponse.json(data);
   } catch (error) {
