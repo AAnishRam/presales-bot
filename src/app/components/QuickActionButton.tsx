@@ -1,5 +1,15 @@
-const QuickActionButton = ({ url, label }) => {
-  const handleOnClick = (url) => {
+import React from "react";
+
+interface QuickActionButtonProps {
+  url: string;
+  label: string;
+}
+
+const QuickActionButton: React.FC<QuickActionButtonProps> = ({
+  url,
+  label,
+}) => {
+  const handleOnClick = (url: string) => {
     window.open(url, "_blank");
   };
 
