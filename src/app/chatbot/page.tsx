@@ -8,7 +8,9 @@ import bottom_left from "@/app/_assests/bottom-left-shade.png";
 import hamburger from "@/app/_assests/hamburger.png";
 import logo from "@/app/_assests/center-logo.png";
 import send from "@/app/_assests/Send-button.png";
-import { marked } from "marked";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 
 interface Message {
   id: number;
@@ -256,32 +258,6 @@ const page = () => {
     }
   }, [messages.length]);
 
-  function formatMessageText(text: string): string {
-    if (!text) return "";
-
-    // Configure marked options for optimal rendering
-    marked.setOptions({
-      async: false, // Synchronous parsing
-      breaks: true, // Add <br> on single line breaks
-      gfm: true, // Use GitHub Flavored Markdown
-      pedantic: false, // Don't conform to original markdown.pl behavior
-      silent: false, // Throw errors if any
-      renderer: new marked.Renderer(), // Custom renderer (you can customize it later)
-      tokenizer: new marked.Tokenizer(), // Use default tokenizer (can customize later)
-      walkTokens: null, // No custom walkTokens function for now
-    });
-
-    try {
-      // Parse markdown and return HTML (forced to be synchronous)
-      const htmlContent = marked.parse(text) as string;
-      return htmlContent;
-    } catch (error) {
-      console.error("Markdown parsing error:", error);
-      // Fallback to plain text with line breaks preserved
-      return text.replace(/\n/g, "<br>");
-    }
-  }
-
   return (
     <div className="relative bg-gradient-to-l from-[#fff9f5] to-white h-screen w-screen">
       {/* Background Images */}
@@ -394,15 +370,72 @@ const page = () => {
                     )}
                     {message.sender === "ai" && (
                       <span className="text-[11px] font-semibold uppercase tracking-wider mb-2 block opacity-80 text-[#666]">
-                        OUR AI
+                        GoML's Scribe
                       </span>
                     )}
-                    <div
-                      className="leading-relaxed font-inherit m-0 p-0 text-inherit block w-full break-words"
-                      dangerouslySetInnerHTML={{
-                        __html: formatMessageText(message.text),
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm, remarkBreaks]}
+                      components={{
+                        h1: ({ children }: any) => (
+                          <h1 className="text-2xl font-bold mb-4">
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({ children }: any) => (
+                          <h2 className="text-xl font-semibold mt-6 mb-3">
+                            {children}
+                          </h2>
+                        ),
+                        h3: ({ children }: any) => (
+                          <h3 className="text-lg font-semibold mt-4 mb-2">
+                            {children}
+                          </h3>
+                        ),
+                        p: ({ children }: any) => (
+                          <p className="mb-3 whitespace-pre-wrap leading-relaxed">
+                            {children}
+                          </p>
+                        ),
+                        strong: ({ children }: any) => (
+                          <strong className="font-semibold">{children}</strong>
+                        ),
+                        ul: ({ children }: any) => (
+                          <ul className="list-disc ml-6 marker:font-bold space-y-1">
+                            {children}
+                          </ul>
+                        ),
+                        ol: ({ node, children, ...props }: any) => {
+                          const start = node?.start ?? 1;
+                          return (
+                            <ol
+                              start={start}
+                              className="list-decimal ml-6 marker:font-bold space-y-1"
+                              {...props}
+                            >
+                              {children}
+                            </ol>
+                          );
+                        },
+                        li: ({ children }: any) => (
+                          <li className="pl-1">{children}</li>
+                        ),
+                        br: () => <br />,
+                        a: ({ href, children }: any) => (
+                          <a
+                            href={href}
+                            className="text-blue-600 hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {children}
+                          </a>
+                        ),
                       }}
-                    ></div>
+                    >
+                      {typeof message.text === "string"
+                        ? message.text.replace(/\\n/g, "\n")
+                        : message.text}
+                    </ReactMarkdown>
 
                     {/* Display visualizations if available */}
                     {message.sender === "ai" && (
