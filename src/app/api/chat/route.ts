@@ -4,7 +4,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Forward the request to your Python backend
     const response = await fetch(
       "http://13.220.115.202:8000/app/api/v1/conversation/chat",
       {
@@ -42,7 +41,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Add a new route to handle image downloads
+//for image
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -56,7 +55,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Fetch the image from your backend
     const response = await fetch(imageUrl);
 
     if (!response.ok) {
@@ -65,10 +63,12 @@ export async function GET(request: NextRequest) {
 
     const buffer = await response.arrayBuffer();
 
+    const safeFilename = filename.replace(/[^\x20-\x7E]/g, "_");
+
     return new NextResponse(buffer, {
       headers: {
         "Content-Type": "image/png",
-        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Content-Disposition": `attachment; filename="${safeFilename}"`,
         "Content-Length": buffer.byteLength.toString(),
       },
     });
