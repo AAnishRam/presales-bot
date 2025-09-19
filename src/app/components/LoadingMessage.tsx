@@ -27,7 +27,7 @@ const LoadingMessage: React.FC<LoadingMessageProps> = ({
       } else {
         clearInterval(typingInterval);
       }
-    }, 50); // Typing speed
+    }, 20);
 
     return () => clearInterval(typingInterval);
   }, [message, isVisible]);

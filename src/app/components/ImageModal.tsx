@@ -14,7 +14,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, image, onClose }) => {
     console.log(image);
     if (image) {
       try {
-        // Use CORS-enabled fetch to handle cross-origin images
         const response = await fetch(
           `/api/chat?url=${encodeURIComponent(
             image.url
@@ -41,7 +40,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, image, onClose }) => {
         }
       } catch (error) {
         console.error("Download failed:", error);
-        // Fallback: try direct download
         try {
           const response = await fetch(image.url);
           const blob = await response.blob();
@@ -57,7 +55,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, image, onClose }) => {
           window.URL.revokeObjectURL(url);
         } catch (fallbackError) {
           console.error("Fallback download failed:", fallbackError);
-          // Last resort: open in new tab
           window.open(image.url, "_blank");
         }
       }

@@ -4,7 +4,6 @@ body {
   font-family: "Geist", sans-serif;
 }
 
-/* Custom animations and utilities for the chatbot */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -47,7 +46,6 @@ body {
   }
 }
 
-/* Custom scrollbar utilities */
 .scrollbar-none {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -86,7 +84,6 @@ body {
   background: rgba(158, 203, 251, 0.5);
 }
 
-/* Message text styling for markdown content */
 .message-text p {
   margin: 0.75em 0;
   line-height: 1.6;
@@ -193,7 +190,6 @@ body {
   background: #f9fafb;
 }
 
-/* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .mobile-single-col {
     grid-template-columns: 1fr !important;

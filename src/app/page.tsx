@@ -60,7 +60,7 @@ const page = () => {
         const nextIndex = (prev + 1) % loadingMessages.length;
         return nextIndex;
       });
-    }, 2000); // Change message every 2 seconds
+    }, 2000); //2sec
   };
 
   const stopLoadingSequence = () => {
@@ -95,7 +95,6 @@ const page = () => {
     };
     setMessages((prev) => [...prev, loadingMessage]);
 
-    // Start the loading sequence
     startLoadingSequence();
 
     try {
@@ -122,7 +121,6 @@ const page = () => {
       const data = await response.json();
       console.log(data);
 
-      // Stop loading sequence
       stopLoadingSequence();
 
       setMessages((prev) => {
@@ -146,7 +144,6 @@ const page = () => {
     } catch (error) {
       console.error("Error calling API:", error);
 
-      // Stop loading sequence on error
       stopLoadingSequence();
 
       setMessages((prev) => {
@@ -162,7 +159,6 @@ const page = () => {
     }
   };
 
-  // Update loading messages in real-time
   useEffect(() => {
     if (loadingMessageIndex >= 0) {
       setMessages((prev) =>
@@ -175,7 +171,6 @@ const page = () => {
     }
   }, [loadingMessageIndex]);
 
-  // Cleanup interval on unmount
   useEffect(() => {
     return () => {
       stopLoadingSequence();
@@ -201,7 +196,7 @@ const page = () => {
     setIsChatStarted(false);
     setMessages([]);
     setInputValue("");
-    stopLoadingSequence(); // Stop any running loading sequence
+    stopLoadingSequence();
   };
 
   const handleImageClick = (imageUrl: string, title: string) => {
@@ -254,7 +249,6 @@ const page = () => {
   const handlePromptSelect = (prompt: string) => {
     setInputValue(prompt);
     setShowPromptModal(false);
-    // Auto-resize textarea
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height =
@@ -268,7 +262,6 @@ const page = () => {
 
   return (
     <div className="relative bg-gradient-to-l from-[#fff9f5] to-white h-screen w-screen">
-      {/* bg img */}
       <div className="fixed top-0 right-0 w-[749.27px] h-[592.41px] z-[1] pointer-events-none">
         <Image
           src={top_right}
@@ -295,7 +288,6 @@ const page = () => {
           isChatStarted ? "justify-start pt-4 px-8" : "justify-between"
         } h-screen p-8 z-10 relative transition-all duration-500`}
       >
-        {/* logo & tit */}
         <div
           className={`flex flex-col items-center ${
             isChatStarted ? "flex-none py-4 mb-4" : "flex-1 justify-center"
@@ -327,7 +319,6 @@ const page = () => {
           )}
         </div>
 
-        {/* msg area */}
         {isChatStarted && (
           <ChatMessagesContainer
             messages={messages}
@@ -338,7 +329,6 @@ const page = () => {
           />
         )}
 
-        {/* input area */}
         <div className="w-full max-w-[900px] mb-4 sm:mb-8">
           <div className="mb-4 sm:mb-6 relative bg-gradient-to-br from-[#e1d9d9] to-[#9ecbfb] p-[2px] sm:p-[3px] rounded-[12px] sm:rounded-[15px] w-full max-w-[900px]">
             <textarea
@@ -397,7 +387,6 @@ const page = () => {
         </div>
       </div>
 
-      {/* Prompt Selection Modal */}
       {showPromptModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[200] p-4">
           <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
