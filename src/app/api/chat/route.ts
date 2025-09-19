@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const response = await fetch(
-      "http://13.220.115.202:8000/app/api/v1/conversation/chat",
+      "http://13.220.115.202:8000/api/v1/conversation/chat",
       {
         method: "POST",
         headers: {

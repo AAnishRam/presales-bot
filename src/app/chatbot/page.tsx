@@ -32,6 +32,7 @@ const page = () => {
   const [isChatStarted, setIsChatStarted] = useState(false);
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showPromptModal, setShowPromptModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<{
     url: string;
     title: string;
@@ -237,6 +238,34 @@ const page = () => {
     }
   }, [messages.length]);
 
+  const predefinedPrompts = [
+    "My customer in retail wants to reduce inventory waste using AI — what case studies can I show them?",
+    "Can you give me 2–3 AI/ML solutions for a healthcare customer who needs faster patient insights from unstructured data?",
+    "Do we have any examples where funding reduced the customer's upfront cost of AI adoption?",
+    "Which partners have built AI solutions on top of Snowflake or Databricks that I can reference for a financial services customer?",
+    "Show me examples of how we've accelerated time-to-market for AI products in manufacturing.",
+    "What AI workloads have delivered measurable revenue growth for media & entertainment customers?",
+    "Can you suggest a proposed solution for an insurance customer wanting to automate claims processing?",
+    "Do we have case studies showing partner expertise with customer service chatbots?",
+    "Give me a comparison of 2 case studies where different LLMs (Claude vs. ChatGPT) were used, and why.",
+    "If my customer doesn't know what AI can do, can you suggest 3 industry-relevant workloads with business value proof points?",
+  ];
+
+  const handlePromptSelect = (prompt: string) => {
+    setInputValue(prompt);
+    setShowPromptModal(false);
+    // Auto-resize textarea
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        Math.min(textareaRef.current.scrollHeight, 120) + "px";
+    }
+  };
+
+  const handlePromptButtonClick = () => {
+    setShowPromptModal(true);
+  };
+
   return (
     <div className="relative bg-gradient-to-l from-[#fff9f5] to-white h-screen w-screen">
       {/* bg img */}
@@ -310,8 +339,8 @@ const page = () => {
         )}
 
         {/* input area */}
-        <div className="w-full max-w-[900px] mb-8">
-          <div className="mb-6 relative bg-gradient-to-br from-[#e1d9d9] to-[#9ecbfb] p-[3px] rounded-[15px] w-full max-w-[900px]">
+        <div className="w-full max-w-[900px] mb-4 sm:mb-8">
+          <div className="mb-4 sm:mb-6 relative bg-gradient-to-br from-[#e1d9d9] to-[#9ecbfb] p-[2px] sm:p-[3px] rounded-[12px] sm:rounded-[15px] w-full max-w-[900px]">
             <textarea
               ref={textareaRef}
               placeholder={
@@ -323,36 +352,41 @@ const page = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               rows={1}
-              className="w-full min-h-[50px] max-h-[120px] py-[15px] px-6 pr-[115px] border-none rounded-xl text-base outline-none bg-white text-[#333] font-inherit leading-normal resize-none overflow-y-auto placeholder:text-[#888] placeholder:font-normal scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[rgba(158,203,251,0.3)] hover:scrollbar-thumb-[rgba(158,203,251,0.5)]"
+              className="w-full min-h-[45px] sm:min-h-[50px] max-h-[100px] sm:max-h-[120px] py-[12px] sm:py-[15px] px-4 sm:px-6 pr-[85px] sm:pr-[115px] border-none rounded-[10px] sm:rounded-xl text-sm sm:text-base outline-none bg-white text-[#333] font-inherit leading-normal resize-none overflow-y-auto placeholder:text-[#888] placeholder:font-normal scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[rgba(158,203,251,0.3)] hover:scrollbar-thumb-[rgba(158,203,251,0.5)]"
               style={{ resize: "none" }}
             />
             <button
               onClick={handleSendMessage}
               disabled={!inputValue.trim()}
-              className="absolute right-2 top-7 -translate-y-1/2 w-[100px] h-[42px] border-none rounded-xl bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] cursor-pointer flex items-center justify-center shadow-[0_3px_10px_rgba(127,176,105,0.3)] transition-all duration-200 z-[2] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-95 enabled:hover:scale-105 enabled:hover:shadow-[0_5px_15px_rgba(127,176,105,0.4)] enabled:active:scale-95"
+              className="absolute right-1.5 sm:right-2 top-7 -translate-y-1/2 w-[75px] sm:w-[100px] h-[36px] sm:h-[42px] border-none rounded-[8px] sm:rounded-xl bg-gradient-to-br from-[#a8d5ba] to-[#7fb069] cursor-pointer flex items-center justify-center shadow-[0_2px_8px_rgba(127,176,105,0.3)] sm:shadow-[0_3px_10px_rgba(127,176,105,0.3)] transition-all duration-200 z-[2] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-95 enabled:hover:scale-105 enabled:hover:shadow-[0_4px_12px_rgba(127,176,105,0.4)] sm:enabled:hover:shadow-[0_5px_15px_rgba(127,176,105,0.4)] enabled:active:scale-95"
             >
               <Image src={send} alt="Send" />
             </button>
           </div>
 
           {!isChatStarted && (
-            <div className="flex flex-nowrap gap-11 justify-center max-w-[900px] w-full">
-              <div className="flex-1 w-[10px]">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-11 justify-center max-w-[900px] w-full px-2 sm:px-0">
+              <div className="flex-1 w-full sm:w-[10px]">
                 <QuickActionButton
                   url="https://www.goml.io/ai-glossary"
                   label="🌆 Glossary"
                 />
               </div>
-              <div className="flex-1">
-                <QuickActionButton url="" label="🍾 Prompt" />
+              <div className="flex-1 w-full">
+                <button
+                  onClick={handlePromptButtonClick}
+                  className="w-full py-2.5 px-2 border border-[#e5e5e5] rounded-xl bg-gradient-to-br from-white to-[#f8f9fa] text-xs cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] text-[#333] font-medium whitespace-nowrap h-[42px] flex items-center justify-center hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:border-[#9ecbfb] hover:bg-gradient-to-br hover:from-[#f0f8ff] hover:to-white"
+                >
+                  🍾 Prompt
+                </button>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <QuickActionButton
                   url="https://calculator.aws/#/"
                   label="🎓 Price Calculator"
                 />
               </div>
-              <div className="flex-1 ">
+              <div className="flex-1 w-full">
                 <QuickActionButton
                   url="https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/"
                   label="🧠 Services"
@@ -362,6 +396,46 @@ const page = () => {
           )}
         </div>
       </div>
+
+      {/* Prompt Selection Modal */}
+      {showPromptModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[200] p-4">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-semibold text-[#130261]">
+                  Select a Prompt
+                </h2>
+                <button
+                  onClick={() => setShowPromptModal(false)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center"
+                >
+                  ×
+                </button>
+              </div>
+              <p className="text-gray-600 mt-2">
+                Choose from these pre-written prompts to get started quickly
+              </p>
+            </div>
+
+            <div className="p-6 overflow-y-auto max-h-[60vh]">
+              <div className="grid gap-3">
+                {predefinedPrompts.map((prompt, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePromptSelect(prompt)}
+                    className="text-left p-4 bg-gradient-to-br from-[#f8f9fa] to-white border border-[#e5e7eb] rounded-xl hover:border-[#9ecbfb] hover:shadow-md transition-all duration-200 group"
+                  >
+                    <p className="text-sm sm:text-base text-[#374151] group-hover:text-[#130261] transition-colors">
+                      {prompt}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

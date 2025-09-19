@@ -14,7 +14,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Presales",
-  description: "Generated Anish",
+  description: "An AI driven chatbot for assisting AWS salesperson",
+  icons: {
+    icon: "/goml.png",
+  },
 };
 
 export default function RootLayout({

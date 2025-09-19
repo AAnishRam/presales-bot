@@ -40,7 +40,7 @@ const AiMessageVisuals: React.FC<AiMessageVisualsProps> = ({ message }) => {
   return (
     <>
       {message.has_both_diagrams ? (
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
           {message.architecture_url &&
             renderSingleVisual(
               "🏗️ AWS Architecture Diagram",
